@@ -38,4 +38,6 @@ class TestTimelinePost(unittest.TestCase):
 
         posts = TimelinePost.select()
         assert posts[0].name == "John Doe"
+        assert posts[0].email == "john@example.com"
+        assert posts[1].name == "Jane Doe"
         assert posts[1].email == "jane@example.com"
