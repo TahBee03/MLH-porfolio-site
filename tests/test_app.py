@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # APP TESTING
-=======
->>>>>>> 65815ebc1688cc7d1fec7427f861cdc04f70b2e7
 # tests/test_app.py
 
 import unittest
@@ -19,18 +16,11 @@ class AppTestCase(unittest.TestCase):
         assert response.status_code == 200
 
         html = response.get_data(as_text=True)
-<<<<<<< HEAD
         assert "<title>Talike Bennett's MLH Portfolio</title>" in html
         # assert "Talike.jpg" in html (Unncessary since image file is in info_page.html, not home.html)
 
     def test_timeline(self):
         # TODO: Figure out why status code is 308 and not 200
-=======
-        assert "<title>MLH Fellow</title>" in html
-        assert "Talike.jpg" in html
-
-    def test_timeline(self):
->>>>>>> 65815ebc1688cc7d1fec7427f861cdc04f70b2e7
         response = self.client.get("/api/timeline-post")
         assert response.status_code == 200
         assert response.is_json
@@ -66,8 +56,4 @@ class AppTestCase(unittest.TestCase):
         response = self.client.post("/api/timeline-post/", data={"name": "John Doe", "email": "not-an-email", "content": "Hello world, I'm John!"})
         assert response.status_code == 400
         html = response.get_data(as_text=True)
-<<<<<<< HEAD
         assert "Invalid email" in html
-=======
-        assert "Invalid email" in html
->>>>>>> 65815ebc1688cc7d1fec7427f861cdc04f70b2e7
