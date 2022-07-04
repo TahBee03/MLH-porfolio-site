@@ -48,7 +48,7 @@
             // [...f][0][0] -> 'name'
             
             // http://127.0.0.1:5000/api/timeline-post/ -> local version
-            fetch('http://127.0.0.1:5000/api/timeline-post/', {
+            fetch('http://tdbportfolio.duckdns.org:5000/api/timeline-post/', {
                 method: "POST",
                 body: f,
             })
@@ -76,7 +76,7 @@
             // SOURCE: https://www.javascripttutorial.net/javascript-fetch-api/
             async function getPosts() {
                 // http://127.0.0.1:5000/api/timeline-post/ -> local version
-                let url = 'http://127.0.0.1:5000/api/timeline-post/';
+                let url = 'http://tdbportfolio.duckdns.org:5000//api/timeline-post/';
                 try {
                     let res = await fetch(url);
                     return await res.json();
