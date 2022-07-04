@@ -16,6 +16,12 @@ body {
     margin: 0px;
 }
 
+main {
+    width: min(1200px, 100%);
+    margin: 100px auto;
+    transition: 0.25s
+}
+
 /* TEXT */
 h2 {
     text-transform: uppercase;
@@ -35,11 +41,9 @@ ul, p {
 .nav-bar {
     width: 100%;
     text-align: center;
-    /* font-family: "Roboto", serif; */
     font-weight: 700 !important;
     padding-top: 30px;
     position: sticky; /* Fixed position hides elements below */
-    /* margin-bottom: 200px; */
     top: 0px;
     height: 425px;
     z-index: 1000;
@@ -50,7 +54,7 @@ ul, p {
     animation-iteration-count: infinite;
     animation-direction: normal;
 
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 @keyframes gradient {
@@ -76,7 +80,7 @@ ul, p {
     align-items: center;
     justify-content: center;
 
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 .nav-logo img {
@@ -96,7 +100,7 @@ ul, p {
     margin-top: 10px;
     margin-bottom: 10px;
 
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 .profile img {
@@ -116,18 +120,14 @@ ul, p {
     padding: 0px;
     margin: 20px;
 
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 .tabs {
     padding-bottom: 20px;
-    transition: 0.3s;
+    transition: 0.25s;
 }
 /**********/
-
-main {
-    transition: 0.3s;
-}
 
 .banner {
     padding: 20px 0px 50px 0px;
@@ -146,11 +146,6 @@ main {
     color: white;
     font-size: 50px;
     font-weight: 700;
-}
-
-main {
-    width: min(1200px, 100%);
-    margin: 100px auto;
 }
 
 hr {
@@ -181,8 +176,6 @@ section {
     text-align: end;
     width: 100%;
 }
-
-
 
 .user-switch {
     position: absolute;
@@ -241,23 +234,6 @@ section {
     margin-right: auto;
     padding-top: 20px;
 }
-
-/* TIMELINE POSTS */
-.timeline-table {
-    border: 1px solid black;
-    width: 100%;
-}
-
-.timeline-table th, .timeline-table td {
-    align-content: center;
-    width: 25%;
-    border: 1px solid black;
-}
-
-.timeline-table td input {
-    width: 100%;
-}
-/**********/
 
 /* LOGOS */
 .logos {

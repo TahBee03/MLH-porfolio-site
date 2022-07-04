@@ -1,7 +1,7 @@
 from asyncio import constants # ?
 import os # Import operating system tools
 from sqlite3 import Time # ?
-from flask import Flask, render_template, request, url_for  # Flask, render_template(), url_for()
+from flask import Flask, render_template, request, url_for, Response  # Flask, render_template(), url_for()
 from dotenv import load_dotenv # load_dotenv()
 from peewee import * # Used to connect to database
 import datetime
@@ -12,12 +12,17 @@ from playhouse.shortcuts import model_to_dict # model_to_dict()
 load_dotenv() # Loads .env file; the data from MySQL is read
 app = Flask(__name__)
 
-# Database
-mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
-    user=os.getenv("MYSQL_USER"),
-    password=os.getenv("MYSQL_PASSWORD"),
-    host=os.getenv("MYSQL_HOST"),
-    port=3306)
+# Connect to database depending on environment variable
+if os.getenv("TESTING") == "true":
+    # Establish copy of app in memory (?)
+    print("Running in test mode")
+    mydb = SqliteDatabase('file:memory?mode=memory&cache=shared', uri=True)
+else: 
+    mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306)
 
 # Object-relational mapper (ORM) model (?)
 class TimelinePost(Model):
@@ -52,21 +57,36 @@ def contact():
 def timeline():
     return render_template("timeline.html", url=os.getenv("URL"))
 
-# Adds timeline post to database
+# POST request: Adds timeline post to database
 @app.route("/api/timeline-post/", methods=['POST'])
 def post_timeline_post():
+    if request.form.get('name') == None or request.form.get('name') == "":
+        return Response(
+            "Invalid name.",
+            status=400
+        )
+    elif request.form.get('content') == "":
+        return Response(
+            "Invalid content.",
+            status=400
+        )
+    elif not('@' in request.form.get('content')):
+        return Response(
+            "Invalid email.",
+            status=400
+        )
     name = request.form['name']
     email = request.form['email']
     content = request.form['content']
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
     return model_to_dict(timeline_post)
 
-# Puts posts in descending order
+# GET request: Puts posts in descending order
 @app.route("/api/timeline-post/", methods=['GET'])
 def get_timeline_post():
     return {'timeline_posts':[model_to_dict(p) for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())]}
 
-# Deletes a specific post
+# DELETE request: Deletes a specific post
 @app.route("/api/timeline-post/<list_num>/", methods=['DELETE'])
 def delete_timeline_post(list_num):
     # SOURCE: https://docs.peewee-orm.com/en/latest/peewee/querying.html

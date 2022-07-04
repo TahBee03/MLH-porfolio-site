@@ -1,93 +1,110 @@
-{% extends 'info_page.html' %}
+{% extends 'index.html' %}
 
-{% block page %}
-<form id="form">
-    <table class="timeline-table t1">
+{% block css_link %}
+<link lang='sass' rel="stylesheet" href="/static/styles/timeline.css">
+{% endblock %}
+
+{% block content %}
+<body class="body">
+    <nav class="tabs" id="tabs">
+        <a href="{{ url_for('fellowship') }}">Fellowship Experience</a> |
+        <a href="{{ url_for('about_me') }}">About Me</a> |
+        <a href="{{ url_for('contact') }}">Contact</a> |
+        <a href="{{ url_for('timeline') }}">Posts</a>
+    </nav>
+
+    <form id="form">
+        <table class="timeline-table t1">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Content</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="name-field" name="name"/>
+                </td>
+                <td>
+                    <input type="text" id="email-field" name="email"/>
+                </td>
+                <td>
+                    <input type="text" id="content-field" name="content"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit"/>
+    </form>
+    
+    <script>
+        /* POST REQUEST WITH JAVASCRIPT */
+        // SOURCE: https://openjavascript.info/2022/04/26/post-form-data-using-javascripts-fetch-api/
+        const form = document.getElementById('form'); // Reads submitted data
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Stops HTML from opening a new page
+            const f = new FormData(form);
+            console.log([...f]);
+            // [...f] -> [['name', <name>], ['email', <email>], ['content', <content>]]
+            // [...f][0] -> ['name', <name>]
+            // [...f][0][0] -> 'name'
+            
+            // http://127.0.0.1:5000/api/timeline-post/ -> local version
+            fetch('http://127.0.0.1:5000/api/timeline-post/', {
+                method: "POST",
+                body: f,
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+    
+            location.reload(); // Refresh page
+        })
+        /**********/
+    </script>
+    
+    <hr/>
+    
+    <table class="timeline-table t2">
+        <caption>Post Timeline</caption>
         <tr>
             <th>Name</th>
             <th>Email</th>
             <th>Content</th>
+            <th>Time Created</th>
         </tr>
-        <tr>
-            <td>
-                <input type="text" id="name-field" name="name"/>
-            </td>
-            <td>
-                <input type="text" id="email-field" name="email"/>
-            </td>
-            <td>
-                <input type="text" id="content-field" name="content"/>
-            </td>
-        </tr>
+        <script>
+            /* GET REQUEST WITH JAVASCRIPT */
+            // SOURCE: https://www.javascripttutorial.net/javascript-fetch-api/
+            async function getPosts() {
+                // http://127.0.0.1:5000/api/timeline-post/ -> local version
+                let url = 'http://127.0.0.1:5000/api/timeline-post/';
+                try {
+                    let res = await fetch(url);
+                    return await res.json();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+    
+            async function renderPosts() {
+                let posts = await getPosts();
+                let html = '';
+                for(element of posts.timeline_posts) {
+                    let row = `<tr>
+                        <td>${element.name}</td>
+                        <td>${element.email}</td>
+                        <td>${element.content}</td>
+                        <td>${element.created_at}</td>
+                        </tr>`;
+                    html += row;
+                }
+    
+                let container = document.querySelector('.t2');
+                container.innerHTML += html;
+            }
+    
+            renderPosts();
+            /**********/
+        </script>
     </table>
-    <input type="submit" value="Submit"/>
-</form>
-
-<script>
-    /* POST REQUEST WITH JAVASCRIPT */
-    // SOURCE: https://openjavascript.info/2022/04/26/post-form-data-using-javascripts-fetch-api/
-    const form = document.getElementById('form'); // Reads submitted data
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Stops HTML from opening a new page
-        const f = new FormData(form);
-        console.log([...f]);
-        // http://127.0.0.1:5000/api/timeline-post/ -> local version
-        fetch('http://tdbportfolio.duckdns.org:5000/api/timeline-post/', {
-            method: "POST",
-            body: f,
-        })
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-
-        location.reload(); // Refresh page
-    })
-    /**********/
-</script>
-
-<hr/>
-
-<table class="timeline-table t2">
-    <caption>Post Timeline</caption>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Content</th>
-        <th>Time Created</th>
-    </tr>
-    <script>
-        /* GET REQUEST WITH JAVASCRIPT */
-        // SOURCE: https://www.javascripttutorial.net/javascript-fetch-api/
-        async function getPosts() {
-            // http://127.0.0.1:5000/api/timeline-post/ -> local version
-            let url = 'http://tdbportfolio.duckdns.org:5000/api/timeline-post/';
-            try {
-                let res = await fetch(url);
-                return await res.json();
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        async function renderPosts() {
-            let posts = await getPosts();
-            let html = '';
-            for(element of posts.timeline_posts) {
-                let row = `<tr>
-                    <td>${element.name}</td>
-                    <td>${element.email}</td>
-                    <td>${element.content}</td>
-                    <td>${element.created_at}</td>
-                    </tr>`;
-                html += row;
-            }
-
-            let container = document.querySelector('.t2');
-            container.innerHTML += html;
-        }
-
-        renderPosts();
-        /**********/
-    </script>
-</table>
+</body>
 {% endblock %}
