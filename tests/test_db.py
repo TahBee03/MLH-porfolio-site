@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # DATABASE TESTING
+=======
+>>>>>>> 65815ebc1688cc7d1fec7427f861cdc04f70b2e7
 # test_db.py
 
 import unittest
@@ -35,10 +38,18 @@ class TestTimelinePost(unittest.TestCase):
         assert first_post.id == 1
         second_post = TimelinePost.create(name='Jane Doe', email='jane@example.com', content='Hello world, I\'m Jane!')
         assert second_post.id == 2
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 65815ebc1688cc7d1fec7427f861cdc04f70b2e7
 
         posts = TimelinePost.select()
         assert posts[0].name == "John Doe"
         assert posts[0].email == "john@example.com"
         assert posts[1].name == "Jane Doe"
+<<<<<<< HEAD
         assert posts[1].email == "jane@example.com"
+=======
+        assert posts[1].email == "jane@example.com"
+>>>>>>> 65815ebc1688cc7d1fec7427f861cdc04f70b2e7
