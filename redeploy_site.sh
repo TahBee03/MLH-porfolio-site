@@ -6,3 +6,4 @@ pip3 install -r requirements.txt > /dev/null
 systemctl daemon-reload
 systemctl restart myportfolio
 deactivate
+chmod 700 redeploy_site.sh
