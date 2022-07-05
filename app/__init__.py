@@ -60,6 +60,7 @@ def timeline():
 # POST request: Adds timeline post to database
 @app.route("/api/timeline-post/", methods=['POST'])
 def post_timeline_post():
+    # SOURCE: https://stackoverflow.com/questions/57664997/how-to-return-400-bad-request-on-flask
     if request.form.get('name') == None or request.form.get('name') == "":
         return Response(
             "Invalid name.",
