@@ -1,13 +1,17 @@
 from asyncio import constants # ?
 import os # Import operating system tools
-from sqlite3 import Time # ?
+from sqlite3 import Time
+from urllib import response # ?
 from flask import Flask, render_template, request, url_for, Response  # Flask, render_template(), url_for()
-from dotenv import load_dotenv # load_dotenv()
+from dotenv import load_dotenv
+import flask # load_dotenv()
 from peewee import * # Used to connect to database
 import datetime
 from playhouse.shortcuts import model_to_dict # model_to_dict()
 
 # NOTE: url_for is linked to the functions below and returns the corresponding index; preferred over hardcoding links
+# NOTE: Database is close after all uses with mydb.close() to prevent mysql container error
+# NOTE: Added flask.jsonify() to prevent "Access to fetch..." console error
 
 load_dotenv() # Loads .env file; the data from MySQL is read
 app = Flask(__name__)
@@ -36,6 +40,7 @@ class TimelinePost(Model):
 
 mydb.connect()
 mydb.create_tables([TimelinePost])
+mydb.close()
 
 @app.route("/")
 def home():
@@ -71,7 +76,7 @@ def post_timeline_post():
             "Invalid content.",
             status=400
         )
-    elif not('@' in request.form.get('content')):
+    elif not('@' in request.form.get('email')):
         return Response(
             "Invalid email.",
             status=400
@@ -80,12 +85,17 @@ def post_timeline_post():
     email = request.form['email']
     content = request.form['content']
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
+    mydb.close()
     return model_to_dict(timeline_post)
 
 # GET request: Puts posts in descending order
 @app.route("/api/timeline-post/", methods=['GET'])
 def get_timeline_post():
-    return {'timeline_posts':[model_to_dict(p) for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())]}
+    api = {'timeline_posts':[model_to_dict(p) for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())]}
+    response = flask.jsonify(api)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    mydb.close()
+    return response
 
 # DELETE request: Deletes a specific post
 @app.route("/api/timeline-post/<list_num>/", methods=['DELETE'])
@@ -99,6 +109,7 @@ def delete_timeline_post(list_num):
             break
         else:
             counter += 1
+    mydb.close()
     return 'ok'
 
 if __name__ == "__main__":

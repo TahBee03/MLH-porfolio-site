@@ -14,7 +14,7 @@
         <a href="{{ url_for('timeline') }}">Posts</a>
     </nav>
 
-    <form id="form">
+    <form id="form" autocomplete="off">
         <table class="timeline-table t1">
             <tr>
                 <th>Name</th>
@@ -36,6 +36,7 @@
         <input type="submit" value="Submit"/>
     </form>
     
+    <!-- NOTE: Shortened fetch link to not break CORS policy -->
     <script>
         /* POST REQUEST WITH JAVASCRIPT */
         // SOURCE: https://openjavascript.info/2022/04/26/post-form-data-using-javascripts-fetch-api/
@@ -48,8 +49,7 @@
             // [...f][0] -> ['name', <name>]
             // [...f][0][0] -> 'name'
             
-            // http://127.0.0.1:5000/api/timeline-post/ -> local version
-            fetch('http://tdbportfolio.duckdns.org:5000/api/timeline-post/', {
+            fetch('/api/timeline-post/', {
                 method: "POST",
                 body: f,
             })
@@ -76,8 +76,7 @@
             /* GET REQUEST WITH JAVASCRIPT */
             // SOURCE: https://www.javascripttutorial.net/javascript-fetch-api/
             async function getPosts() {
-                // http://127.0.0.1:5000/api/timeline-post/ -> local version
-                let url = 'http://tdbportfolio.duckdns.org:5000//api/timeline-post/';
+                let url = '/api/timeline-post/';
                 try {
                     let res = await fetch(url);
                     return await res.json();
