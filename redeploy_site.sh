@@ -1,8 +1,6 @@
 #!/bin/bash
 
+cd MLH-portfolio-site
 git fetch && git reset origin/main --hard > /dev/null
-source env/bin/activate
-pip3 install -r requirements.txt > /dev/null
-systemctl daemon-reload
-systemctl restart myportfolio
-deactivate
+docker compose -f docker-compose.prod.yml down > /dev/null
+docker compose -f docker-compose.prod.yml up -d --build > /dev/null
