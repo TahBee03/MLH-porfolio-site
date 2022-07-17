@@ -1,17 +1,16 @@
 from asyncio import constants # ?
 import os # Import operating system tools
-from sqlite3 import Time
+from sqlite3 import Time # ?
 from urllib import response # ?
-from flask import Flask, render_template, request, url_for, Response  # Flask, render_template(), url_for()
-from dotenv import load_dotenv
-import flask # load_dotenv()
+from flask import Flask, render_template, request, url_for, Response, jsonify  # Flask, render_template(), request.form, url_for(), Response, jsonify()
+from dotenv import load_dotenv # load_dotenv()
 from peewee import * # Used to connect to database
-import datetime
+import datetime # datetime.datetime.now
 from playhouse.shortcuts import model_to_dict # model_to_dict()
 
 # NOTE: url_for is linked to the functions below and returns the corresponding index; preferred over hardcoding links
-# NOTE: Database is close after all uses with mydb.close() to prevent mysql container error
-# NOTE: Added flask.jsonify() to prevent "Access to fetch..." console error
+# NOTE: Database is closed after all uses with mydb.close() to prevent mysql container error
+# NOTE: Added jsonify() to prevent "Access to fetch..." console error
 
 load_dotenv() # Loads .env file; the data from MySQL is read
 app = Flask(__name__)
@@ -40,28 +39,37 @@ class TimelinePost(Model):
 
 mydb.connect()
 mydb.create_tables([TimelinePost])
-mydb.close()
+if os.getenv("TESTING") != "true":
+    mydb.close()
 
+# WEBSITE PAGES
+# Home page
 @app.route("/")
 def home():
     return render_template("home.html", url=os.getenv("URL"))
 
+# Fellowship experience page
 @app.route("/fellowship-experience/")
 def fellowship():
     return render_template("fellowship.html", url=os.getenv("URL"))
 
+# About me page
 @app.route("/about-me/")
 def about_me():
     return render_template("about_me.html", url=os.getenv("URL"))
 
+# Contact page
 @app.route("/contact/")
 def contact():
     return render_template("contact.html", url=os.getenv("URL"))
 
+# Posts page
 @app.route("/timeline/")
 def timeline():
     return render_template("timeline.html", url=os.getenv("URL"))
+########################################
 
+# HTTP requests + database interaction
 # POST request: Adds timeline post to database
 @app.route("/api/timeline-post/", methods=['POST'])
 def post_timeline_post():
@@ -85,16 +93,18 @@ def post_timeline_post():
     email = request.form['email']
     content = request.form['content']
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
-    mydb.close()
+    if os.getenv("TESTING") != "true":
+        mydb.close()
     return model_to_dict(timeline_post)
 
 # GET request: Puts posts in descending order
 @app.route("/api/timeline-post/", methods=['GET'])
 def get_timeline_post():
     api = {'timeline_posts':[model_to_dict(p) for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())]}
-    response = flask.jsonify(api)
+    response = jsonify(api)
     response.headers.add('Access-Control-Allow-Origin', '*')
-    mydb.close()
+    if os.getenv("TESTING") != "true":
+        mydb.close()
     return response
 
 # DELETE request: Deletes a specific post
@@ -109,8 +119,10 @@ def delete_timeline_post(list_num):
             break
         else:
             counter += 1
-    mydb.close()
+    if os.getenv("TESTING") != "true":
+        mydb.close()
     return 'ok'
+########################################
 
 if __name__ == "__main__":
     app.run(debug=True)

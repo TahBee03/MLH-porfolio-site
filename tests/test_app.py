@@ -3,9 +3,8 @@
 
 import unittest
 import os
-from app import app
-
 os.environ['TESTING'] = 'true'
+from app import app
 
 class AppTestCase(unittest.TestCase):
     def setUp(self):
@@ -21,6 +20,7 @@ class AppTestCase(unittest.TestCase):
     def test_about_me(self):
         response = self.client.get("/static/Talike.jpg")
         assert response.status_code == 200
+        response.close()
 
     def test_timeline(self):
         response = self.client.get("/api/timeline-post/")
@@ -28,7 +28,7 @@ class AppTestCase(unittest.TestCase):
         assert response.is_json
         json = response.get_json()
         assert "timeline_posts" in json
-        assert len(json["timeline_posts"]) > 0
+        assert len(json["timeline_posts"]) == 0
 
         response2 = self.client.post("/api/timeline-post/", data={
             "name": "MLH Fellow",
