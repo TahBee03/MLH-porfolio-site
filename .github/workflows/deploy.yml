@@ -30,3 +30,6 @@ jobs:
 
     - name: Deploy Site
       run: ssh my-vps '~/redeploy_site.sh'
+
+    - name: Post to Discord
+      run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Deployment Successful! :rocket:"
