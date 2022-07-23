@@ -3,7 +3,7 @@ on:
   push: # Workflow is triggered for all pushes to main branch
     branches:
     - main
-  pull-request: # Workflow is triggered for all pull requests to main branch
+  pull_request: # Workflow is triggered for all pull requests to main branch
     branches:
     - main
 jobs:
