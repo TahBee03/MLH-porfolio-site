@@ -1,4 +1,16 @@
 /* TIMELINE POSTS */
+.tabs {
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    background: gray;
+}
+
+.tabs > a {
+    padding-top: 50px;
+    line-height: 100px;
+}
+
 .timeline-table {
     border: 1px solid black;
     width: 100%;
