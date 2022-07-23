@@ -22,10 +22,10 @@ jobs:
         python-version: '3.9.6'
 
     - name: Setup Python Virtual Environment
-      run: python -m venv python3-virtualenv
+      run: python -m venv env
 
     - name: Install Dependencies
-      run: python3-virtualenv/bin/pip install -r requirements.txt
+      run: env/bin/pip install -r requirements.txt
     
     - name: Run Tests
       run: ./run_test.sh
