@@ -1,0 +1,31 @@
+name: Run Tests # Workflow name
+on:
+  push: # Workflow is triggered for all pushes to main branch
+    branches:
+    - main
+  pull-request: # Workflow is triggered for all pull requests to main branch
+    branches:
+    - main
+jobs:
+  test: # Job created on Ubuntu VM
+    runs-on: ubuntu-latest
+    name: Run Tests
+    env:
+      TESTING: true
+    steps: # Steps for job
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9.6'
+
+    - name: Setup Python Virtual Environment
+      run: python -m venv python3-virtualenv
+
+    - name: Install Dependencies
+      run: python3-virtualenv/bin/pip install -r requirements.txt
+    
+    - name: Run Tests
+      run: ./run_test.sh
