@@ -1,0 +1,8 @@
+1) Removed user_conf.d/ -> No longer needed since NGINX container is not being used
+2) Removed redeploy_site.sh -> No longer needed since deployment is done automatically by Heroku
+3) Removed example.env -> Not necessary
+4) Removed Dockerfile -> No longer needed since deployment is done automatically by Heroku
+5) Removed docker_compose.yml and docker_compose.prod.yml -> No longer needed since deployment is done automatically by Heroku
+6) Commented out Configure SSH and Deploy Site steps in deploy.yml -> No longer needed since VPS is not being used
+7) Created Procfile -> Required to start up Heroku deployment
+8) Moved content out of app/ -> Python file needs to be detected by Procfile
