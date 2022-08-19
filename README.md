@@ -3,16 +3,22 @@
 **Pod:** 22.SUM.15  
 
 ## Description
-For this project, we were tasked with creating a portfolio website using the Flask framework and Jinja templates. We were provided a foundation for the project -- consisting of `__init__.py`, `index.html`, and `main.css` -- and added our unique features from there. A custom page was made for each of the team members. For each page, we listed a few aspects of our lives with sections such as About Me, Work Experience, and Education. We linked our Hobbies section to another page that displays images associated with our hobbies. We even made use of Google Maps to embed a map that highlisghts places that we have traveled to.
-
-The Jinja template engine came in handy because it reduced the amount of repeated code we needed to write. The CSS stylesheet also helped with adding visually appealing features to the website pages.
+Provided a basic Flask web app foundation, PE Fellows were challenged to build portfolio websites to express themselves and talk about their experiences. As we progressed through the fellowship, we learned about and made use of various tools to not only expand the functionality of our websites, but to also monitor the background processes.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/65676639/175758975-bc9c38dc-9cde-4ed4-a8ad-a398182ccb44.gif" width="300">
 </p>
 
 ## Development Process
-...
+1) Created basic web app with Flask, HTML, and CSS
+2) Set up DigitalOcean VPS, deployed website with tmux, and defined website subdomain with DuckDNS
+3) Deployed website as a service and automated deployment with Bash scripts
+4) Established a database for posts using MySQL
+5) Created tests to ensure website works as expected before deploying
+6) Deployed website within a Docker container and established certificates using NGINX
+7) Implemented CI/CD using GitHub Actions and YAML configuration files
+8) Configured Prometheus and Grafana containers to monitor website activity
+9) Shut down VPS that hosted website, but redeployed website using Heroku
 
 ## Tools Used
 ![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
@@ -22,9 +28,8 @@ The Jinja template engine came in handy because it reduced the amount of repeate
 ![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 ![github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
-![digital-ocean](https://img.shields.io/badge/Digital_Ocean-0080FF?style=for-the-badge&logo=DigitalOcean&logoColor=white)
 ![sh](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![mysql](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
-![docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
 ![github-actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
+![heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
