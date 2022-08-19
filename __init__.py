@@ -12,6 +12,13 @@ from playhouse.shortcuts import model_to_dict # model_to_dict()
 # NOTE: Database is closed after all uses with mydb.close() to prevent mysql container error
 # NOTE: Added jsonify() to prevent "Access to fetch..." console error
 
+# Connect local MySQL database to Heroku database: https://www.youtube.com/watch?v=Zcg71lxW-Yo
+
+# TODO: Fix database errors.
+# - Heroku: 
+#   - peewee.InterfaceError: Error, database must be initialized before opening a connection.
+#   - gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+
 load_dotenv() # Loads .env file; the data from MySQL is read
 app = Flask(__name__)
 
