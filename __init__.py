@@ -14,11 +14,6 @@ from playhouse.shortcuts import model_to_dict # model_to_dict()
 
 # Connect local MySQL database to Heroku database: https://www.youtube.com/watch?v=Zcg71lxW-Yo
 
-# TODO: Fix database errors.
-# - Heroku: 
-#   - peewee.InterfaceError: Error, database must be initialized before opening a connection.
-#   - gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
-
 load_dotenv() # Loads .env file; the data from MySQL is read
 app = Flask(__name__)
 
