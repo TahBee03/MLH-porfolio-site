@@ -15,17 +15,30 @@ jobs:
     steps: # Steps for job
     - name: Checkout Repository
       uses: actions/checkout@v2
+      id: 1
 
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9.6'
+      id: 2
 
     - name: Setup Python Virtual Environment
       run: python -m venv env
+      id: 3
 
     - name: Install Dependencies
       run: env/bin/pip install -r requirements.txt
+      id: 4
     
     - name: Run Tests
       run: ./run_test.sh
+      id: 5
+
+    if: steps.5.outcome == "success"
+    - name: Post to Discord (Success)
+      run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Tests passed! :white_check_mark:"
+
+    if: steps.5.outcome == "failure"
+    - name: Post to Discord (Failure)
+      run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Tests failed! :warning:"
