@@ -35,10 +35,8 @@ jobs:
       run: ./run_test.sh
       id: 5
 
-    if: steps.5.outcome == "success"
     - name: Post to Discord (Success)
       run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Tests passed! :white_check_mark:"
 
-    if: steps.5.outcome == "failure"
     - name: Post to Discord (Failure)
       run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Tests failed! :warning:"
