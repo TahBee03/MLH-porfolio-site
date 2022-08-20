@@ -36,11 +36,11 @@ jobs:
       id: 's5'
 
     - name: Post to Discord (Success)
-      id: 's6.1'
+      id: 's6_1'
       if: steps.s5.outcome == 'success'
       run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Tests passed! :white_check_mark:"
 
     - name: Post to Discord (Failure)
-      id: 's6.2'
+      id: 's6_2'
       if: steps.s5.outcome == 'failure'
       run: curl -s -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "content=Tests failed! :warning:"
