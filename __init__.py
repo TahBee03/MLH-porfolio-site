@@ -13,6 +13,7 @@ from playhouse.shortcuts import model_to_dict # model_to_dict()
 # NOTE: Added jsonify() to prevent "Access to fetch..." console error
 
 # Connect local MySQL database to Heroku database: https://www.youtube.com/watch?v=Zcg71lxW-Yo
+# Configuration variables: https://devcenter.heroku.com/articles/config-vars
 
 load_dotenv() # Loads .env file; the data from MySQL is read
 app = Flask(__name__)
@@ -44,7 +45,7 @@ mydb.create_tables([TimelinePost])
 if os.getenv("TESTING") != "true":
     mydb.close()
 
-# WEBSITE PAGES
+# WEBSITE PAGES ##########
 # Home page
 @app.route("/")
 def home():
@@ -71,7 +72,7 @@ def timeline():
     return render_template("timeline.html", url=os.getenv("URL"))
 ########################################
 
-# HTTP requests + database interaction
+# HTTP requests + database interaction ##########
 # POST request: Adds timeline post to database
 @app.route("/api/timeline-post/", methods=['POST'])
 def post_timeline_post():
