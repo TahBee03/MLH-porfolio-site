@@ -6,3 +6,4 @@ python3-virtualenv
 venv
 flask.sqlite
 .DS_Store
+debug.txt
