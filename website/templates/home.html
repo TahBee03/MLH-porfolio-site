@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 
 {% block css_link %}
-<link lang='sass' rel="stylesheet" href="/static/styles/home.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/home.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -18,10 +18,10 @@
     <br>
 
     <div class="tabs">
-        <a class="button-1" href="{{ url_for('fellowship') }}">Fellowship Experience</a>
-        <a class="button-2" href="{{ url_for('about_me') }}">About Me</a>
-        <a class="button-3" href="{{ url_for('contact') }}">Contact</a>
-        <a class="button-4" href="{{ url_for('timeline') }}">Posts</a>
+        <a class="button-1" href="{{ url_for('views.fellowship') }}">Fellowship Experience</a>
+        <a class="button-2" href="{{ url_for('views.about_me') }}">About Me</a>
+        <a class="button-3" href="{{ url_for('views.contact') }}">Contact</a>
+        <a class="button-4" href="{{ url_for('views.timeline') }}">Posts</a>
     </div>
 </body>
 {% endblock %}

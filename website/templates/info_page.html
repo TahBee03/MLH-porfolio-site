@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block css_link %}
+<link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<body>
+    <header class="nav-bar" id="nav-bar">
+        <div class="nav-logo" id="nav-logo">
+            <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="mlh-logo"/>
+        </div>
+        <div class="profile">
+            <div class="profile-picture" id="profile-picture">
+                <a href="{{ url_for('views.home') }}">
+                    <img src="{{ url_for('static', filename='img/Talike.jpg') }}" alt="profile-picture"/>
+                </a>
+            </div>
+            <h1 id="title">Talike Bennett</h1>
+        </div>
+        <nav class="tabs" id="tabs">
+            <a href="{{ url_for('views.fellowship') }}">Fellowship Experience</a> |
+            <a href="{{ url_for('views.about_me') }}">About Me</a> |
+            <a href="{{ url_for('views.contact') }}">Contact</a> |
+            <a href="{{ url_for('views.timeline') }}">Posts</a>
+        </nav>
+    </header>
+
+    <main id="main">
+        {% block page %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', filename='js/info_page.js') }}"></script>
+</body>
+{% endblock %}
